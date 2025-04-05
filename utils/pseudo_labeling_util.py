@@ -75,7 +75,8 @@ def pseudo_labeling(args, data_loader, model, itr):
 
             pseudo_maxstd.extend(max_std.squeeze(1)[selected_idx].cpu().numpy().tolist())
             pseudo_target.extend(max_idx[selected_idx].cpu().numpy().tolist())
-            pseudo_idx.extend(indexs[selected_idx].numpy().tolist())
+            selected_idx = selected_idx.to("cpu") 
+            pseudo_idx.extend(indexs[selected_idx].cpu().numpy().tolist())
             gt_target.extend(targets[selected_idx].cpu().numpy().tolist())
 
             loss = F.cross_entropy(outputs, targets.to(dtype=torch.long))
